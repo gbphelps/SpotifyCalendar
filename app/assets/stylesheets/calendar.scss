@@ -1,0 +1,18 @@
+$size: 75px;
+
+.day{
+  height: $size;
+  width: $size;
+  background:red;
+  float: left;
+}
+
+.null{
+  background:white;
+  float: left;
+}
+
+.calendar{
+  width: $size*7;
+  background: blue;
+}
