@@ -19,9 +19,7 @@ const dayHeaders = (
 export default class Calendar extends React.Component {
   constructor(props){
     super(props);
-    console.log(this.props.date);
     this.state = {
-      date: this.props.date,
       displayDate: this.props.date,
     };
   }

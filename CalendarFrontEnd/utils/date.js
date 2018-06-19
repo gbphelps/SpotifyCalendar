@@ -25,3 +25,7 @@ export const months = {
   '10': 'November',
   '11': 'December'
 }
+
+export const format = date => {
+  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+}

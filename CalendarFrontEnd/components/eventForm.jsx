@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleModal } from '../actions/ui';
-import MiniCal from './smallCal'
+import MiniCal from './smallCal';
+import { format } from '../utils/date';
 
 class Form extends React.Component{
   constructor(props){
@@ -24,7 +25,9 @@ class Form extends React.Component{
         <form>
           <i className="close fas fa-times-circle"
              onClick={this.props.toggle}></i>
+           <div>{format(this.state.start)}</div>
            <MiniCal date={this.state.start} set={this.set('start')}/>
+           <div>{format(this.state.end)}</div>
            <MiniCal date={this.state.end} set={this.set('end')}/>
         </form>
       </div>
