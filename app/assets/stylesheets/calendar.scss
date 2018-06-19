@@ -26,6 +26,7 @@ body{
   height: $size/4;
   float: left;
   text-align: center;
+  border-right: 1px solid transparent;
 }
 
 .day{
@@ -49,4 +50,33 @@ p{
 
 .fas{
   cursor: pointer;
+}
+
+
+.screen{
+  background: rgba(0,0,0,.7);
+  position:fixed;
+  top: 0;
+  left: 0;
+  height:100%;
+  width:100%;
+}
+
+form{
+  padding: 10px;
+  background:white;
+  height: 400px;
+  width: 400px;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 3px;
+}
+
+.close{
+  position:absolute;
+  right: 10px;
 }

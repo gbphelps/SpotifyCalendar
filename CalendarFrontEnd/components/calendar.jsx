@@ -1,4 +1,7 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
+import { toggleModal } from '../actions/ui';
+import Form from './eventForm';
 
 
 Date.prototype.endOfMonth = function(){
@@ -42,7 +45,7 @@ const months = {
 }
 
 
-export default class Calendar extends React.Component {
+class Calendar extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -57,7 +60,15 @@ export default class Calendar extends React.Component {
 
     let i, j, k;
     for (i=0; i<firstWeekday; i++) cal.push(<div key={i} className='day null'/>);
-    for (j=0; j<endOfMonth; j++) cal.push(<div key={i+j} className='day'><p>{j+1}</p></div>);
+    for (j=0; j<endOfMonth; j++) cal.push(
+      <div
+        key={i+j}
+        className='day'
+        onClick={this.props.toggleModal}>
+          <p>{j+1}</p>
+        </div>
+      )
+    ;
     for (k=0; k<end; k++) cal.push(<div key={i+j+k} className='day null'/>);
 
     return cal;
@@ -98,8 +109,16 @@ export default class Calendar extends React.Component {
 
       {dayHeaders}
       {this.renderMonth(firstWeekday, endOfMonth)}
-
+      <Form/>
     </div>
     )
   }
 }
+
+const mapDispatch = dispatch => {
+  return {
+    toggleModal: () => dispatch(toggleModal())
+  }
+}
+
+export default connect(null,mapDispatch)(Calendar)
