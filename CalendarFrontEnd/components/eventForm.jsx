@@ -22,33 +22,57 @@ class Time extends React.Component{
     return val;
   }
 
-  setMins(e){
-    const current = +e.currentTarget.value;
-    if (Number.isNaN(current) || current > 60) return;
-    this.setState({minute: current});
+  setTime(){
+    const hour = this.state.hour + (this.state.suffix === 'am' ? 0 : 12);
+    const date = new Date(this.props.date.valueOf());
+    date.setHours(hour, this.state.minute, 0);
+    this.props.set(date);
   }
 
   setHours(e){
     const current = +e.currentTarget.value;
+    if (current > 1) e.currentTarget.nextElementSibling.select();
     if (Number.isNaN(current) || current > 12) return;
     this.setState({hour: current});
   }
 
+  setMins(e){
+    const current = +e.currentTarget.value;
+    if (current > 5) e.currentTarget.nextElementSibling.select();
+    if (Number.isNaN(current) || current > 60) return;
+    this.setState({minute: current});
+  }
+
+  setSuffix(e){
+    const current = e.currentTarget.value;
+    if (current === 'p') this.setState({suffix:'pm'});
+    if (current === 'a') this.setState({suffix:'am'});
+    e.currentTarget.blur();
+  }
+
+
+
 
   render(){
     return (
-      <div>
+      <div style={{display:'inline-block'}}>
         <input
+          size='2'
           onClick={e => e.currentTarget.select()}
           onChange={e=>this.setHours(e)}
+          onBlur={()=>this.setTime()}
           value={this.format(this.state.hour)}/>:
         <input
+          size='2'
           onClick={e => e.currentTarget.select()}
           onChange={e=>this.setMins(e)}
+          onBlur={()=>this.setTime()}
           value={this.format(this.state.minute)}/>
         <input
+          size='2'
           onClick={e => e.currentTarget.select()}
-          onChange={e=>this.setState({suffix: e.currentTarget.value})}
+          onChange={e=>this.setSuffix(e)}
+          onBlur={()=>this.setTime()}
           value={this.state.suffix}/>
       </div>
     );
@@ -94,22 +118,29 @@ class Form extends React.Component{
   }
 
   render(){
+    console.log(this.state.start, this.state.end);
     return(
       <div>
         <div className='screen' onClick={this.props.toggle}/>
         <form>
           <i className="close fas fa-times-circle"
              onClick={this.props.toggle}></i>
-
            <div>
              <div>Start:</div>
              {this.dateSetter('start')}
-             <Time/>
+             &nbsp;at&nbsp;
+             <Time
+               date={this.state.start}
+               set={this.set('start')}/>
            </div>
 
            <div>
              <div>End:</div>
              {this.dateSetter('end')}
+             &nbsp;at&nbsp;
+             <Time
+               date={this.state.end}
+               set={this.set('end')}/>
            </div>
         </form>
       </div>
