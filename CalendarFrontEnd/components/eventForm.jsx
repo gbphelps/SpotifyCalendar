@@ -4,6 +4,60 @@ import { toggleModal } from '../actions/ui';
 import MiniCal from './smallCal';
 import { format } from '../utils/date';
 
+
+
+
+class Time extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      hour: 12,
+      minute: 0,
+      suffix: 'am'
+    }
+  }
+
+  format(val){
+    if (val < 10) return '0' + val;
+    return val;
+  }
+
+  setMins(e){
+    const current = +e.currentTarget.value;
+    if (Number.isNaN(current) || current > 60) return;
+    this.setState({minute: current});
+  }
+
+  setHours(e){
+    const current = +e.currentTarget.value;
+    if (Number.isNaN(current) || current > 12) return;
+    this.setState({hour: current});
+  }
+
+
+  render(){
+    return (
+      <div>
+        <input
+          onClick={e => e.currentTarget.select()}
+          onChange={e=>this.setHours(e)}
+          value={this.format(this.state.hour)}/>:
+        <input
+          onClick={e => e.currentTarget.select()}
+          onChange={e=>this.setMins(e)}
+          value={this.format(this.state.minute)}/>
+        <input
+          onClick={e => e.currentTarget.select()}
+          onChange={e=>this.setState({suffix: e.currentTarget.value})}
+          value={this.state.suffix}/>
+      </div>
+    );
+  }
+}
+
+
+
+
 class Form extends React.Component{
   constructor(props){
     super(props);
@@ -30,15 +84,11 @@ class Form extends React.Component{
 
   dateSetter(attr){
     return(
-      <div className='date-selector'>
-        <div
-          style={{cursor: 'pointer'}}
-          onClick={()=>this.toggleCal(attr)}>
+      <div className='date-selector' onClick={()=>this.toggleCal(attr)}>
           <i className="far fa-calendar-alt"/>
           &nbsp; {format(this.state[attr])}
           {this.state.activeCal === attr ?
             <MiniCal date={this.state[attr]} set={this.set(attr)}/> :null}
-        </div>
       </div>
     )
   }
@@ -52,12 +102,13 @@ class Form extends React.Component{
              onClick={this.props.toggle}></i>
 
            <div>
-             Start:
+             <div>Start:</div>
              {this.dateSetter('start')}
+             <Time/>
            </div>
 
            <div>
-             End:
+             <div>End:</div>
              {this.dateSetter('end')}
            </div>
         </form>

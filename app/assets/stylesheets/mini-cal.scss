@@ -16,7 +16,7 @@ $mini: 25px;
   padding-top: 5px;
   position:absolute;
   top: 25px;
-  left: -1px;
+  left: 0;
   background:white;
   border: 1px solid black;
   border-radius: 2px;
@@ -30,10 +30,23 @@ $mini: 25px;
 }
 
 .date-selector{
-  border: 1px solid #aaa;
+  background: #F6F1FF;
   border-radius: 2px;
   display:inline-block;
-  padding:2px 5px;
+  padding:5px 7px;
   position:relative;
   margin: 3px;
+  cursor: pointer;
+}
+
+input{
+  display: inline-block;
+  background: #F6F1FF;
+  margin: 3px;
+  padding: 5px 7px;
+  border:none;
+}
+
+input:focus{
+  outline: none;
 }
