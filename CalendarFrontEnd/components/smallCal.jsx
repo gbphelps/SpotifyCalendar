@@ -35,13 +35,14 @@ export default class Calendar extends React.Component {
     let i, j, k;
     for (i=0; i<firstWeekday; i++) cal.push(<div key={i} className='mini'/>);
     for (j=0; j<endOfMonth; j++){
-      const displayDate = new Date(this.state.displayDate.valueOf());
-      displayDate.setDate(j+1);
+      const date = new Date(this.state.displayDate.valueOf());
+      date.setDate(j+1);
+      const selected = date.valueOf() === this.state.date.valueOf();
       cal.push(
       <div
         key={i+j}
-        className='mini'
-        onClick={()=>this.setState({ displayDate })}>
+        className={`mini ${selected ? 'selected' : ''}`}
+        onClick={()=>this.setState({ date })}>
           {j+1}
       </div>
       )
