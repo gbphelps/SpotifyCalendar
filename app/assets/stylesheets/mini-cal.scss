@@ -1,0 +1,14 @@
+$mini: 25px;
+
+.mini {
+  height: $mini;
+  width: $mini;
+  float: left;
+  text-align: center;
+  line-height: 25px;
+}
+
+.mini-cal {
+  width: $mini * 7;
+  text-align: center;
+}

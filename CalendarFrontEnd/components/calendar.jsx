@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { toggleModal } from '../actions/ui';
 import Form from './eventForm';
-import * as Cal from '../utils/date'
+import * as Cal from '../utils/date';
 
 
 
@@ -28,7 +28,9 @@ class Calendar extends React.Component {
     };
   }
 
-  renderMonth(firstWeekday, endOfMonth){
+  renderMonth(){
+    const firstWeekday = Cal.firstWeekday(this.state.displayDate);
+    const endOfMonth = Cal.endOfMonth(this.state.displayDate);
     const cal = []
     const end = (7 - (endOfMonth+firstWeekday) % 7) % 7;
 
@@ -55,8 +57,6 @@ class Calendar extends React.Component {
   }
 
   render(){
-    const firstWeekday = Cal.firstWeekday(this.state.displayDate);
-    const endOfMonth = Cal.endOfMonth(this.state.displayDate);
     const month = Cal.months[this.state.displayDate.getMonth()];
     const year = this.state.displayDate.getFullYear();
 
@@ -82,7 +82,7 @@ class Calendar extends React.Component {
       </div>
 
       {dayHeaders}
-      {this.renderMonth(firstWeekday, endOfMonth)}
+      {this.renderMonth()}
       <Form/>
     </div>
     )
