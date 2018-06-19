@@ -97,9 +97,15 @@ class Calendar extends React.Component {
 
       {dayHeaders}
       {this.renderMonth()}
-      <Form date={this.state.selectedDate}/>
+      {this.props.eventForm ? <Form date={this.state.selectedDate}/> : null}
     </div>
     )
+  }
+}
+
+const mapState = state => {
+  return {
+    eventForm: state.ui.eventForm
   }
 }
 
@@ -109,4 +115,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(null,mapDispatch)(Calendar)
+export default connect(mapState,mapDispatch)(Calendar)

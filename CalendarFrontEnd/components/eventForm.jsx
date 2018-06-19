@@ -7,20 +7,25 @@ class Form extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      date: this.props.date,
-      minical: true
+      start: this.props.date,
+      end: this.props.date,
     }
+    this.set = this.set.bind(this)
+  }
+
+  set(attr){
+    return val => this.setState({[attr]: val})
   }
 
   render(){
-    if (!this.props.on) return null;
     return(
       <div>
         <div className='screen' onClick={this.props.toggle}/>
         <form>
           <i className="close fas fa-times-circle"
              onClick={this.props.toggle}></i>
-           <MiniCal date={this.props.date}/>
+           <MiniCal date={this.state.start} set={this.set('start')}/>
+           <MiniCal date={this.state.end} set={this.set('end')}/>
         </form>
       </div>
     )

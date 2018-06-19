@@ -33,21 +33,21 @@ export default class Calendar extends React.Component {
     const end = (7 - (endOfMonth+firstWeekday) % 7) % 7;
 
     let i, j, k;
-    for (i=0; i<firstWeekday; i++) cal.push(<div key={i} className='mini'/>);
+    for (i=0; i<firstWeekday; i++) cal.push(<div key={i} className='mini null'/>);
     for (j=0; j<endOfMonth; j++){
       const date = new Date(this.state.displayDate.valueOf());
       date.setDate(j+1);
-      const selected = date.valueOf() === this.state.date.valueOf();
+      const selected = date.valueOf() === this.props.date.valueOf();
       cal.push(
       <div
         key={i+j}
         className={`mini ${selected ? 'selected' : ''}`}
-        onClick={()=>this.setState({ date })}>
+        onClick={()=>this.props.set(date)}>
           {j+1}
       </div>
       )
     };
-    for (k=0; k<end; k++) cal.push(<div key={i+j+k} className='mini'/>);
+    for (k=0; k<end; k++) cal.push(<div key={i+j+k} className='mini null'/>);
     cal.push(<div key='clear' style={{content:'', clear:'both'}}/>);
     return cal;
   }
