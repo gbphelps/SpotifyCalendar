@@ -5,13 +5,13 @@ import * as Cal from '../utils/date'
 
 const dayHeaders = (
   <div>
-    <div className='mini'>S</div>
-    <div className='mini'>M</div>
-    <div className='mini'>T</div>
-    <div className='mini'>W</div>
-    <div className='mini'>T</div>
-    <div className='mini'>F</div>
-    <div className='mini'>S</div>
+    <div className='mini null'>S</div>
+    <div className='mini null'>M</div>
+    <div className='mini null'>T</div>
+    <div className='mini null'>W</div>
+    <div className='mini null'>T</div>
+    <div className='mini null'>F</div>
+    <div className='mini null'>S</div>
   </div>
 );
 
@@ -66,7 +66,7 @@ export default class Calendar extends React.Component {
       <div className='mini-month'>
         <i
           className='fas fa-chevron-circle-left'
-          onClick={() => this.changeMonth(-1)} />
+          onClick={e => {e.stopPropagation(); this.changeMonth(-1)}} />
           &nbsp;
           <div
             style={{
@@ -77,7 +77,7 @@ export default class Calendar extends React.Component {
           &nbsp;
         <i
           className='fas fa-chevron-circle-right'
-          onClick={() => this.changeMonth(1)} />
+          onClick={e => {e.stopPropagation(); this.changeMonth(1)}} />
 
       </div>
 

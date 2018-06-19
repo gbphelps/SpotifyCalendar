@@ -14,10 +14,26 @@ $mini: 25px;
   text-align: center;
   // background: yellow;
   padding-top: 5px;
+  position:absolute;
+  top: 25px;
+  left: -1px;
+  background:white;
+  border: 1px solid black;
+  border-radius: 2px;
+  z-index: 2;
 }
 
 .selected{
   border-radius: 50%;
   background:red;
   color:white;
+}
+
+.date-selector{
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  display:inline-block;
+  padding:2px 5px;
+  position:relative;
+  margin: 3px;
 }

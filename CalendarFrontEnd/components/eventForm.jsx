@@ -10,12 +10,37 @@ class Form extends React.Component{
     this.state = {
       start: this.props.date,
       end: this.props.date,
+      activeCal: null,
     }
     this.set = this.set.bind(this)
   }
 
   set(attr){
-    return val => this.setState({[attr]: val})
+    return val => this.setState({
+      [attr]: val,
+      activeCal: null
+    })
+  }
+
+  toggleCal(cal){
+    this.state.activeCal === cal ?
+    this.setState({activeCal: null}) :
+    this.setState({activeCal: cal})
+  }
+
+  dateSetter(attr){
+    return(
+      <div className='date-selector'>
+        <div
+          style={{cursor: 'pointer'}}
+          onClick={()=>this.toggleCal(attr)}>
+          <i className="far fa-calendar-alt"/>
+          &nbsp; {format(this.state[attr])}
+          {this.state.activeCal === attr ?
+            <MiniCal date={this.state[attr]} set={this.set(attr)}/> :null}
+        </div>
+      </div>
+    )
   }
 
   render(){
@@ -25,10 +50,16 @@ class Form extends React.Component{
         <form>
           <i className="close fas fa-times-circle"
              onClick={this.props.toggle}></i>
-           <div>{format(this.state.start)}</div>
-           <MiniCal date={this.state.start} set={this.set('start')}/>
-           <div>{format(this.state.end)}</div>
-           <MiniCal date={this.state.end} set={this.set('end')}/>
+
+           <div>
+             Start:
+             {this.dateSetter('start')}
+           </div>
+
+           <div>
+             End:
+             {this.dateSetter('end')}
+           </div>
         </form>
       </div>
     )
