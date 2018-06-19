@@ -25,7 +25,18 @@ class Calendar extends React.Component {
     this.state = {
       date: new Date(),
       displayDate: new Date(),
+      selectedDate: new Date(),
     };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+
+  handleClick(i){
+    console.log(i);
+      this.props.toggleModal();
+      const selectedDate = new Date(this.state.displayDate.valueOf());
+      selectedDate.setDate(i);
+      this.setState({ selectedDate });
   }
 
   renderMonth(){
@@ -36,17 +47,20 @@ class Calendar extends React.Component {
 
     let i, j, k;
     for (i=0; i<firstWeekday; i++) cal.push(<div key={i} className='day null'/>);
-    for (j=0; j<endOfMonth; j++) cal.push(
-      <div
-        key={i+j}
-        className='day'
-        onClick={this.props.toggleModal}>
-          <p>{j+1}</p>
-        </div>
-      )
-    ;
+    for (j=0; j<endOfMonth; j++){
+      const day = j + 1;
+      cal.push(
+        <div
+          key={i+j}
+          className='day'
+          onClick={()=>this.handleClick(day)}>
+            <p>{day}</p>
+          </div>
+        );
+    }
     for (k=0; k<end; k++) cal.push(<div key={i+j+k} className='day null'/>);
 
+    cal.push(<div key='clear' style={{content:'', clear:'both'}}/>)
     return cal;
   }
 
@@ -83,7 +97,7 @@ class Calendar extends React.Component {
 
       {dayHeaders}
       {this.renderMonth()}
-      <Form/>
+      <Form date={this.state.selectedDate}/>
     </div>
     )
   }

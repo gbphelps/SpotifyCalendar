@@ -7,7 +7,7 @@ class Form extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      date: new Date(),
+      date: this.props.date,
       minical: true
     }
   }
@@ -20,7 +20,7 @@ class Form extends React.Component{
         <form>
           <i className="close fas fa-times-circle"
              onClick={this.props.toggle}></i>
-           <MiniCal/>
+           <MiniCal date={this.props.date}/>
         </form>
       </div>
     )

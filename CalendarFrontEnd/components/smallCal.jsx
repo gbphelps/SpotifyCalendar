@@ -19,9 +19,10 @@ const dayHeaders = (
 export default class Calendar extends React.Component {
   constructor(props){
     super(props);
+    console.log(this.props.date);
     this.state = {
-      date: new Date(),
-      displayDate: new Date(),
+      date: this.props.date,
+      displayDate: this.props.date,
     };
   }
 
@@ -33,17 +34,20 @@ export default class Calendar extends React.Component {
 
     let i, j, k;
     for (i=0; i<firstWeekday; i++) cal.push(<div key={i} className='mini'/>);
-    for (j=0; j<endOfMonth; j++) cal.push(
+    for (j=0; j<endOfMonth; j++){
+      const displayDate = new Date(this.state.displayDate.valueOf());
+      displayDate.setDate(j+1);
+      cal.push(
       <div
         key={i+j}
         className='mini'
-        onClick={this.props.toggleModal}>
+        onClick={()=>this.setState({ displayDate })}>
           {j+1}
-        </div>
+      </div>
       )
-    ;
+    };
     for (k=0; k<end; k++) cal.push(<div key={i+j+k} className='mini'/>);
-
+    cal.push(<div key='clear' style={{content:'', clear:'both'}}/>);
     return cal;
   }
 
