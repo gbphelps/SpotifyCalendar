@@ -22,10 +22,11 @@ const dayHeaders = (
 class Calendar extends React.Component {
   constructor(props){
     super(props);
+    const seed = new Date().setHours(12,0,0).valueOf();
     this.state = {
-      date: new Date(),
-      displayDate: new Date(),
-      selectedDate: new Date(),
+      date: new Date(seed),
+      displayDate: new Date(seed),
+      selectedDate: new Date(seed),
     };
     this.handleClick = this.handleClick.bind(this);
   }
