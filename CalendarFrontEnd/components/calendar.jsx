@@ -104,6 +104,7 @@ class Calendar extends React.Component {
 
       const day = j + 1;
 
+      //TODO make squares a separate component
       const events = dayHash[day].map((event,idx)=>(
         <li key={idx}>
           {event.title}

@@ -4,7 +4,7 @@ import { toggleModal } from '../actions/ui';
 import MiniCal from './smallCal';
 import { format } from '../utils/date';
 import Time from './time';
-import { createEvent } from '../utils/events';
+import { createEvent } from '../actions/events'
 
 
 class Form extends React.Component{
@@ -35,7 +35,7 @@ class Form extends React.Component{
   }
 
   handleSubmit(){
-    createEvent(this.state)
+    this.props.createEvent(this.state)
   }
 
   dateSetter(attr){
@@ -114,7 +114,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   console.log(toggleModal);
   return {
-    toggle: () => dispatch(toggleModal())
+    toggle: () => dispatch(toggleModal()),
+    createEvent: event => dispatch(createEvent(event))
   };
 };
 
