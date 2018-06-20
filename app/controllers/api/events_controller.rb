@@ -14,7 +14,7 @@ class Api::EventsController < ApplicationController
   def getMonth
     start_stamp = params[:start]
     end_stamp = params[:end]
-    @events = Event.where("events.end > ? AND events.start < ?", params[:start], params[:end])
+    @events = Event.where("events.end >= ? AND events.start < ?", params[:start], params[:end])
     render :index
   end
 
