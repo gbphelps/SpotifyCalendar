@@ -90,7 +90,7 @@ class Form extends React.Component{
 
              <div className='date-bar description'>
                <div className='date-title'>Description:</div>
-               <textarea/>
+               <textarea onChange={this.update('description')} value={this.state.description}/>
              </div>
         </form>
       </div>
