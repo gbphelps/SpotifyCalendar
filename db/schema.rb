@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2018_06_18_235448) do
   enable_extension "plpgsql"
 
   create_table "events", force: :cascade do |t|
-    t.integer "start"
-    t.integer "end"
+    t.bigint "start"
+    t.bigint "end"
     t.string "title"
     t.string "location"
     t.text "description"

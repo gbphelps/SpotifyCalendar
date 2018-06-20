@@ -4,6 +4,7 @@ import { toggleModal } from '../actions/ui';
 import MiniCal from './smallCal';
 import { format } from '../utils/date';
 import Time from './time';
+import { createEvent } from '../utils/events';
 
 
 class Form extends React.Component{
@@ -31,6 +32,10 @@ class Form extends React.Component{
     this.state.activeCal === cal ?
     this.setState({activeCal: null}) :
     this.setState({activeCal: cal})
+  }
+
+  handleSubmit(){
+    createEvent(this.state)
   }
 
   dateSetter(attr){
@@ -92,6 +97,8 @@ class Form extends React.Component{
                <div className='date-title'>Description:</div>
                <textarea onChange={this.update('description')} value={this.state.description}/>
              </div>
+
+             <div onClick={()=>this.handleSubmit()}>Submit</div>
         </form>
       </div>
     )
