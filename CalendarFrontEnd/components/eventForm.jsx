@@ -10,43 +10,64 @@ import { format } from '../utils/date';
 class Time extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-      hour: 12,
-      minute: 0,
-      suffix: 'am'
-    }
+    this.state={};
   }
 
-  format(val){
-    if (val < 10) return '0' + val;
-    return val;
+  minute(){
+    const m = this.props.date.getMinutes();
+    if (m < 10) return '0' + m;
+    return m;
   }
 
-  setTime(){
-    const hour = this.state.hour + (this.state.suffix === 'am' ? 0 : 12);
-    const date = new Date(this.props.date.valueOf());
-    date.setHours(hour, this.state.minute, 0);
-    this.props.set(date);
+  hour(){
+    const h = (this.props.date.getHours() - 1) % 12 + 1;
+    if (h < 10) return '0' + h;
+    return h;
+  }
+
+  suffix(){
+    const h = this.props.date.getHours();
+    return ( h >= 12 ? 'pm' : 'am' )
   }
 
   setHours(e){
     const current = +e.currentTarget.value;
-    if (current > 1) e.currentTarget.nextElementSibling.select();
+    const h = this.props.date.getHours();
+    const date = new Date(this.props.date.valueOf());
+
+    if (current > 1){e.currentTarget.nextElementSibling.select();}
     if (Number.isNaN(current) || current > 12) return;
-    this.setState({hour: current});
+
+    const newhours = current % 12 + (h >= 12 ? 12 : 0);
+    date.setHours(newhours);
+    this.props.set(date);
   }
 
   setMins(e){
     const current = +e.currentTarget.value;
-    if (current > 5) e.currentTarget.nextElementSibling.select();
+    const date = new Date(this.props.date.valueOf());
+
+    if (current > 5){e.currentTarget.nextElementSibling.select();}
     if (Number.isNaN(current) || current > 60) return;
-    this.setState({minute: current});
+    date.setMinutes(current);
+    this.props.set(date);
   }
 
   setSuffix(e){
+    const h = this.props.date.getHours();
     const current = e.currentTarget.value;
-    if (current === 'p') this.setState({suffix:'pm'});
-    if (current === 'a') this.setState({suffix:'am'});
+    const date = new Date(this.props.date.valueOf());
+
+    if (current === 'p' && h < 12){
+      date.setHours(h + 12);
+      this.props.set(date);
+    }
+
+    if (current === 'a' && h >= 12){
+      date.setHours(h - 12);
+      this.props.set(date);
+    }
+
     e.currentTarget.blur();
   }
 
@@ -60,20 +81,17 @@ class Time extends React.Component{
           size='2'
           onClick={e => e.currentTarget.select()}
           onChange={e=>this.setHours(e)}
-          onBlur={()=>this.setTime()}
-          value={this.format(this.state.hour)}/>:
+          value={this.hour()}/>:
         <input
           size='2'
           onClick={e => e.currentTarget.select()}
           onChange={e=>this.setMins(e)}
-          onBlur={()=>this.setTime()}
-          value={this.format(this.state.minute)}/>
+          value={this.minute()}/>
         <input
           size='2'
           onClick={e => e.currentTarget.select()}
           onChange={e=>this.setSuffix(e)}
-          onBlur={()=>this.setTime()}
-          value={this.state.suffix}/>
+          value={this.suffix()}/>
       </div>
     );
   }
@@ -118,7 +136,6 @@ class Form extends React.Component{
   }
 
   render(){
-    console.log(this.state.start, this.state.end);
     return(
       <div>
         <div className='screen' onClick={this.props.toggle}/>
