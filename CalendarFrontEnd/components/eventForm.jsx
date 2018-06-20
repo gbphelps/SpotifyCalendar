@@ -12,6 +12,9 @@ class Form extends React.Component{
     this.state = {
       start: this.props.date,
       end: this.props.date,
+      title: '',
+      location: '',
+      description: '',
       activeCal: null,
     }
     this.set = this.set.bind(this)
@@ -51,6 +54,10 @@ class Form extends React.Component{
     )
   }
 
+  update(field){
+    return e => this.setState({[field]: e.target.value})
+  }
+
   render(){
     return(
       <div>
@@ -63,6 +70,28 @@ class Form extends React.Component{
              {this.dateSetter('start')}
              {this.dateSetter('end')}
 
+             <div style={{margin:'10px',width:'100%'}}>
+               <div className='date-bar'>
+                 <div>Title:</div>
+                 <input
+                   value={this.state.title}
+                   onChange={this.update('title')}
+                   style={{width: '100%'}}/>
+               </div>
+
+               <div className='date-bar'>
+                 <div>Location:</div>
+                 <input
+                   value={this.state.location}
+                   onChange={this.update('location')}
+                   style={{width: '100%'}}/>
+               </div>
+             </div>
+
+             <div className='date-bar description'>
+               <div>Description:</div>
+               <textarea/>
+             </div>
         </form>
       </div>
     )

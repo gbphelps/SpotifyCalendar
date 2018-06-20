@@ -65,19 +65,16 @@ export default class Time extends React.Component{
 
   render(){
     return (
-      <div style={{display:'inline-block'}}>
+      <div style={{display:'flex', alignItems:'center'}}>
         <input
-          size='2'
           onClick={e => e.currentTarget.select()}
           onChange={e=>this.setHours(e)}
           value={this.hour()}/>:
         <input
-          size='2'
           onClick={e => e.currentTarget.select()}
           onChange={e=>this.setMins(e)}
           value={this.minute()}/>
         <input
-          size='2'
           onClick={e => e.currentTarget.select()}
           onChange={e=>this.setSuffix(e)}
           value={this.suffix()}/>
