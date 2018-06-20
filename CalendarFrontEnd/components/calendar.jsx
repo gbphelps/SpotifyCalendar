@@ -46,7 +46,7 @@ class Calendar extends React.Component {
       this.setState({ selectedDate });
   }
 
-  dayRanges(){
+  dayHash(){
     const seed = this.state.displayDate.valueOf();
     let start = new Date(seed);
     start.setDate(1);
@@ -63,12 +63,13 @@ class Calendar extends React.Component {
     }
 
     const dayHash = {};
+    for (var i = 0; i < ranges.length; i++) dayHash[i+1] = [];
+
     this.props.events.forEach(event=>{
       for (let i = 0; i < ranges.length; i++) {
-        console.log(event.start, ranges[i][0], ranges[i][1]);
         if (event.start >= ranges[i][0] &&
             event.start < ranges[i][1]){
-              dayHash[i+1] = dayHash[i+1] ? dayHash[i+1].concat(event) : [event];
+              dayHash[i+1] = dayHash[i+1].concat(event);
               return;
             }
       }
@@ -95,17 +96,27 @@ class Calendar extends React.Component {
     const endOfMonth = Cal.endOfMonth(this.state.displayDate);
     const cal = []
     const end = (7 - (endOfMonth+firstWeekday) % 7) % 7;
+    const dayHash = this.dayHash();
 
     let i, j, k;
     for (i=0; i<firstWeekday; i++) cal.push(<div key={i} className='day null'/>);
     for (j=0; j<endOfMonth; j++){
+
       const day = j + 1;
+
+      const events = dayHash[day].map((event,idx)=>(
+        <li key={idx}>
+          {event.title}
+        </li>
+      ))
+
       cal.push(
         <div
           key={i+j}
           className='day'
           onClick={()=>this.handleClick(day)}>
             <p>{day}</p>
+            <ul>{events}</ul>
           </div>
         );
     }
@@ -124,7 +135,6 @@ class Calendar extends React.Component {
   }
 
   render(){
-    console.log(this.dayRanges());
     const month = Cal.months[this.state.displayDate.getMonth()];
     const year = this.state.displayDate.getFullYear();
 
