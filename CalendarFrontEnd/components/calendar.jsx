@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { toggleModal } from '../actions/ui';
 import Form from './eventForm';
 import * as Cal from '../utils/date';
+import { fetchMonth } from '../actions/events'
 
 
 
@@ -22,7 +23,7 @@ const dayHeaders = (
 class Calendar extends React.Component {
   constructor(props){
     super(props);
-    const seed = new Date().setHours(12,0,0).valueOf();
+    const seed = new Date().setHours(0,0,0).valueOf();
     this.state = {
       date: new Date(seed),
       displayDate: new Date(seed),
@@ -40,22 +41,32 @@ class Calendar extends React.Component {
       this.setState({ selectedDate });
   }
 
-  dayRanges(){
-    const seed = this.state.displayDate.valueOf();
-    let start = new Date(seed);
-    start.setDate(1);
-    start.setHours(0,0,0);
-    const end = new Date(start.valueOf());
-    end.setMonth(start.getMonth()+1);
+  // dayRanges(){
+  //   const seed = this.state.displayDate.valueOf();
+  //   let start = new Date(seed);
+  //   start.setDate(1);
+  //   start.setHours(0,0,0);
+  //   const end = new Date(start.valueOf());
+  //   end.setMonth(start.getMonth()+1);
+  //
+  //   let ranges = [];
+  //   while (start.valueOf() < end.valueOf()) {
+  //     const next = new Date(start.valueOf());
+  //     next.setDate(next.getDate() + 1);
+  //     ranges.push([start.valueOf(), next.valueOf()]);
+  //     start = next;
+  //   }
+  //   return ranges;
+  // }
 
-    let ranges = [];
-    while (start.valueOf() < end.valueOf()) {
-      const next = new Date(start.valueOf());
-      next.setDate(next.getDate() + 1);
-      ranges.push([start.valueOf(), next.valueOf()]);
-      start = next;
-    }
-    return ranges;
+  monthRange(){
+      const seed = this.state.displayDate.valueOf();
+      let start = new Date(seed);
+      start.setDate(1);
+      start.setHours(0,0,0);
+      const end = new Date(start.valueOf());
+      end.setMonth(start.getMonth()+1);
+      return([start.valueOf(), end.valueOf()])
   }
 
   renderMonth(){
@@ -86,11 +97,13 @@ class Calendar extends React.Component {
   changeMonth(inc){
     const displayDate = new Date(this.state.displayDate.valueOf());
     displayDate.setMonth(displayDate.getMonth() + inc);
-    this.setState({ displayDate })
+    this.setState({ displayDate },()=>{
+      this.props.fetchMonth(this.monthRange())
+    })
   }
 
   render(){
-    console.log(this.dayRanges());
+    console.log(this.monthRange());
     const month = Cal.months[this.state.displayDate.getMonth()];
     const year = this.state.displayDate.getFullYear();
 
@@ -131,7 +144,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    toggleModal: () => dispatch(toggleModal())
+    toggleModal: () => dispatch(toggleModal()),
+    fetchMonth: range => dispatch(fetchMonth(range))
   }
 }
 

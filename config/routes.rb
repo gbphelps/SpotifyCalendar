@@ -3,7 +3,13 @@ Rails.application.routes.draw do
   root "static_pages#root"
 
   namespace :api, defaults: {format: :json} do
-    resources :events, only: [:create, :update, :destroy]
+
+    resources :events, only: [:create, :update, :destroy] do
+      collection do
+        get 'getMonth'
+      end
+    end
+
   end
 
 end

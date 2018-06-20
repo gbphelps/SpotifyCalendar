@@ -7,5 +7,14 @@ export const createEvent = formData => {
     method: 'POST',
     url: 'api/events',
     data: { event }
-  })
+  });
+};
+
+export const getMonth = range => {
+  const [start, end] = range;
+  return $.ajax({
+    method: 'GET',
+    url: 'api/events/getMonth',
+    data: { start, end }
+  });
 };
