@@ -40,6 +40,24 @@ class Calendar extends React.Component {
       this.setState({ selectedDate });
   }
 
+  dayRanges(){
+    const seed = this.state.displayDate.valueOf();
+    let start = new Date(seed);
+    start.setDate(1);
+    start.setHours(0,0,0);
+    const end = new Date(start.valueOf());
+    end.setMonth(start.getMonth()+1);
+
+    let ranges = [];
+    while (start.valueOf() < end.valueOf()) {
+      const next = new Date(start.valueOf());
+      next.setDate(next.getDate() + 1);
+      ranges.push([start.valueOf(), next.valueOf()]);
+      start = next;
+    }
+    return ranges;
+  }
+
   renderMonth(){
     const firstWeekday = Cal.firstWeekday(this.state.displayDate);
     const endOfMonth = Cal.endOfMonth(this.state.displayDate);
@@ -72,6 +90,7 @@ class Calendar extends React.Component {
   }
 
   render(){
+    console.log(this.dayRanges());
     const month = Cal.months[this.state.displayDate.getMonth()];
     const year = this.state.displayDate.getFullYear();
 
