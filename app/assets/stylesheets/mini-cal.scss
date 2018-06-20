@@ -12,7 +12,7 @@ $mini: 25px;
 .mini-cal {
   width: $mini * 7;
   text-align: center;
-  padding-top: 5px;
+  padding: 5px;
   position:absolute;
   top: 25px;
   left: 0;
@@ -54,6 +54,7 @@ input{
 
 .date-title{
   width: 35px;
+  margin:5px 0;
   text-transform: capitalize;
   flex-shrink:0;
 }
@@ -67,9 +68,13 @@ input{
   box-sizing: border-box;
 }
 
+.mini-month{
+  margin: 5px 0;
+}
+
 .description{
   flex-direction: column;
-  padding: 0 20px 20px 20px;
+  padding: 0 25px 25px 20px;
   height: 100%;
   flex-shrink: 1;
   align-items: flex-start;

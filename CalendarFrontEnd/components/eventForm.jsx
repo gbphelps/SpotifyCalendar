@@ -89,7 +89,7 @@ class Form extends React.Component{
              </div>
 
              <div className='date-bar description'>
-               <div>Description:</div>
+               <div className='date-title'>Description:</div>
                <textarea/>
              </div>
         </form>
