@@ -14,7 +14,9 @@ export default class Time extends React.Component{
   }
 
   hour(){
-    const h = (this.props.date.getHours() - 1) % 12 + 1;
+    const fullHour = this.props.date.getHours();
+    if ( fullHour === 0) return 12;
+    const h = (fullHour > 12 ? fullHour - 12 : fullHour);
     if (h < 10) return '0' + h;
     return h;
   }
