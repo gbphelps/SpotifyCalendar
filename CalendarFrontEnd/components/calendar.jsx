@@ -54,11 +54,25 @@ class Calendar extends React.Component {
     this.props.events.forEach(event=>{
       const startDay = new Date(event.start);
       if (startDay.getMonth() !== this.state.displayDate.getMonth()) return;
-      const day = startDay.getDate();
-      dayHash[day].push(event);
 
-      for (let i = 1; i < Cal.numDays(event.start,event.end); i++) {
-        dayHash[day + i].unshift({spacer: true});
+      const duration = Cal.numDays(event.start, event.end);
+
+      let length;
+      length = (duration > 7 - startDay.getDay()) ? 7 - startDay.getDay() : duration;
+
+      const day = startDay.getDate();
+      dayHash[day].push(Object.assign({},event,{ length }));
+
+      for (let i = 1; i < duration; i++) {
+        startDay.setDate(startDay.getDate() + 1);
+        const daysLeft = duration - i;
+
+        if (startDay.getDay() === 0){
+          length = daysLeft > 7 ? 7 : daysLeft;
+          const e = Object.assign({}, event, { length });
+          dayHash[day + i].push(e)
+        }
+        else {dayHash[day + i].unshift({spacer: true});}
       }
     });
 
