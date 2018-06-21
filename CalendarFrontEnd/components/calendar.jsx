@@ -64,24 +64,25 @@ class Calendar extends React.Component {
 
       const day = startDay.getDate();
       dayHash[day].push(Object.assign({},event,{ length }));
+      dayHash[day] = dayHash[day].sort((x,y)=>y.length - x.length);
       //assign length to the event for rendering
 
       for (let i = 1; i < duration; i++) {
         //TODO: add clipper for end of month - check starDay.getMonth();
         //probably do this when you're getting the first duration const.
-        
+
         startDay.setDate(startDay.getDate() + 1);
         const daysLeft = duration - i;
 
         if (startDay.getDay() === 0){
           length = daysLeft > 7 ? 7 : daysLeft;
           const e = Object.assign({}, event, { length });
-          dayHash[day + i].push(e)
+          dayHash[day + i].push(e);
+          dayHash[day + i] = dayHash[day + i].sort((x,y)=>y.length - x.length)
         }
         else {dayHash[day + i].unshift({spacer: true});}
       }
     });
-
     return dayHash;
   }
 
