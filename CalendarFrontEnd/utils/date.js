@@ -39,6 +39,21 @@ export const time = date => {
 
   let minute = date.getMinutes();
   if (minute < 10) minute = '0' + minute;
-  
+
   return `${hour}:${minute}${suffix}`
+}
+
+
+export const numDays = (datestamp1, datestamp2) => {
+  const startDay = new Date(datestamp1).setHours(0,0,0,0);
+  const endDay = new Date(datestamp2).setHours(0,0,0,0);
+  return (endDay.valueOf() - startDay.valueOf()) / 86400000 + 1;
+}
+
+
+export const firstOfMonth = date => {
+  const result = new Date(date.valueOf());
+  result.setDate(1);
+  result.setHours(0,0,0,0);
+  return result;
 }

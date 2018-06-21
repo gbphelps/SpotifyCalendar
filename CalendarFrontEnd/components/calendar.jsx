@@ -47,11 +47,8 @@ class Calendar extends React.Component {
   }
 
   dayHash(){
-    let start = new Date(this.state.displayDate.valueOf());
-    start.setDate(1);
-    start.setHours(0,0,0,0);
-    const end = new Date(start.valueOf());
-    end.setMonth(start.getMonth()+1);
+    let start = Cal.firstOfMonth(this.state.displayDate);
+    const end = new Date(start.valueOf()).setMonth(start.getMonth()+1);
 
     let ranges = [];
 
@@ -68,8 +65,10 @@ class Calendar extends React.Component {
     this.props.events.forEach(event=>{
       for (let i = 0; i < ranges.length; i++) {
         if (event.start >= ranges[i][0] && event.start < ranges[i][1]){
-              dayHash[i+1] = dayHash[i+1].concat(event);
-              return;
+          for (let j = 0; j < Cal.numDays(event.start,event.end); j++) {
+            dayHash[i+j+1] = dayHash[i+j+1].concat(event);
+          }
+          return;
         }}});
 
     return dayHash;

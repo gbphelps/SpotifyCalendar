@@ -6,12 +6,10 @@ export const Event = ({event}) => {
   const start = new Date(event.start);
   const end = new Date(event.end);
 
-  const startDay = new Date(event.start).setHours(0,0,0,0);
-  const endDay = new Date(event.end).setHours(0,0,0,0);
-  const diff = (endDay.valueOf() - startDay.valueOf()) / 86400000 + 1;
+  const diff = Cal.numDays(start, end);
 
   return (
-    <li className='event' style={{width: diff*10}}>
+    <li className='event'>
       {event.title}
       <div className='popup'>
         <div>From {Cal.format(start)} at {Cal.time(start)}</div>
