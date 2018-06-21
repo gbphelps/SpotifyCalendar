@@ -38,14 +38,14 @@ body{
   border: 1px solid #dddde8;
   margin: 0 -1px -1px 0;
   cursor: pointer;
-  // background: #F6F1FF;
+  background: #F6F1FF;
 }
 
 .null{
   float: left;
   cursor: default !important;
   border-color: transparent;
-  // background:transparent;
+  background:transparent;
 }
 
 p{
@@ -62,7 +62,7 @@ p{
   width: 200px;
   padding: 5px;
   position:absolute;
-  top: 0;
+  top: 20px;
   left: 0;
   background:white;
   border-radius: 2px;

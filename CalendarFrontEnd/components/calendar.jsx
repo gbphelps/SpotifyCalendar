@@ -5,7 +5,7 @@ import Form from './eventForm';
 import * as Cal from '../utils/date';
 import { fetchMonth } from '../actions/events';
 import values from 'lodash/values';
-import { Event } from './event'
+import Event from './event'
 
 const dayHeaders = (
   <div>
