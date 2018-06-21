@@ -8,6 +8,8 @@ export const Event = ({event}) => {
 
   const diff = Cal.numDays(start, end);
 
+  if (event.spacer) return <li className='event'/>;
+  
   return (
     <li className='event'>
       {event.title}
