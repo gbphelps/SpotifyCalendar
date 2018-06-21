@@ -5,7 +5,8 @@ import Form from './eventForm';
 import * as Cal from '../utils/date';
 import { fetchMonth } from '../actions/events';
 import values from 'lodash/values';
-import Event from './event'
+import Event from './event';
+import EventDetail from './eventDetail'
 
 const dayHeaders = (
   <div>
@@ -162,6 +163,7 @@ class Calendar extends React.Component {
       {dayHeaders}
       {this.renderMonth()}
       {this.props.eventForm ? <Form date={this.state.selectedDate}/> : null}
+      <EventDetail/>
     </div>
     )
   }
