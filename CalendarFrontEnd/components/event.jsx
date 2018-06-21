@@ -12,13 +12,26 @@ const Event = (props) => {
 
   if (props.event.spacer) return <li className='event' style={{width:'0px'}}/>;
 
+  const mouseover = e => {
+      const x = e.clientX + 40;
+      const y = e.clientY + 20;
+      window.show = setTimeout(()=>{
+        props.toggleEvent(props.event.id, x, y);
+      }, 300)
+  }
+
+  const mouseout = () => {
+    clearInterval(window.show);
+    props.toggleEvent();
+  }
+
+
   return (
     <li className='event'
         style={{width: props.event.length*101 - 2, background: 'red'}}
-        onClick={e=> {
-          e.stopPropagation();
-          props.toggleEvent(props.event.id, e.clientX, e.clientY);
-        }}>
+        onMouseOver={e => mouseover(e)}
+        onMouseOut={mouseout}
+        onClick={e=>e.stopPropagation()}>
       {props.event.title}
     </li>
   )
@@ -31,12 +44,3 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(null,mapDispatch)(Event)
-
-
-// <div className='popup'>
-//   <div>From {Cal.format(start)} at {Cal.time(start)}</div>
-//   <div>To {Cal.format(end)} at {Cal.time(end)}</div>
-//   <div>Event: {event.title}</div>
-//   <div>Location: {event.location}</div>
-//   <div>Description: {event.description}</div>
-// </div>
