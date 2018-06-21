@@ -11,7 +11,7 @@ export const Event = ({event}) => {
   if (event.spacer) return <li className='event'/>;
 
   return (
-    <li className='event' style={{width: event.length*101, background: 'red'}}>
+    <li className='event' style={{width: event.length*101 - 2, background: 'red'}}>
       {event.title}
       <div className='popup'>
         <div>From {Cal.format(start)} at {Cal.time(start)}</div>

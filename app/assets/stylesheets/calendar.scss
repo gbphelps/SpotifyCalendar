@@ -66,16 +66,27 @@ p{
   left: 0;
   background:white;
   border-radius: 2px;
-  z-index: 2;
   box-shadow: 0 5px 10px 0px rgba(0,0,0,.3);
   display:none;
+  color:black;
 }
 
 .event:hover .popup{
   display:block;
 }
 
+.event:hover{
+  z-index: 2;
+}
+
 .event{
+  margin: 2px 1px;
+  border-radius: 3px;
+  z-index: 1;
   position:relative;
   height: 20px;
+  line-height: 20px;
+  padding: 0 3px;
+  box-sizing: border-box;
+  color:white;
 };

@@ -47,6 +47,7 @@ class Calendar extends React.Component {
   }
 
   dayHash(){
+    //TODO: refactor - this is gross
     const dayHash = {};
 
     for (var i = 0; i < 31; i++) dayHash[i+1] = [];
@@ -59,11 +60,16 @@ class Calendar extends React.Component {
 
       let length;
       length = (duration > 7 - startDay.getDay()) ? 7 - startDay.getDay() : duration;
+      //if length overflows calendar, clip it
 
       const day = startDay.getDate();
       dayHash[day].push(Object.assign({},event,{ length }));
+      //assign length to the event for rendering
 
       for (let i = 1; i < duration; i++) {
+        //TODO: add clipper for end of month - check starDay.getMonth();
+        //probably do this when you're getting the first duration const.
+        
         startDay.setDate(startDay.getDate() + 1);
         const daysLeft = duration - i;
 
