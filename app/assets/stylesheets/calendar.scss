@@ -34,6 +34,7 @@ body{
   height: $size;
   width: $size;
   float: left;
+  position:relative;
   border: 1px solid #dddde8;
   margin: 0 -1px -1px 0;
   cursor: pointer;
@@ -54,3 +55,24 @@ p{
 .fas, .far{
   cursor: pointer;
 }
+
+.popup {
+  width: 200px;
+  padding: 5px;
+  position:absolute;
+  top: 0;
+  left: 0;
+  background:white;
+  border-radius: 2px;
+  z-index: 2;
+  box-shadow: 0 5px 10px 0px rgba(0,0,0,.3);
+  display:none;
+}
+
+.event:hover .popup{
+  display:block;
+}
+
+.event{
+  position:relative
+};

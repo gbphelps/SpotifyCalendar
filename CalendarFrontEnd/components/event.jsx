@@ -5,7 +5,7 @@ export const Event = ({event}) => {
   const start = new Date(event.start);
   const end = new Date(event.end);
   return (
-    <li>
+    <li className='event'>
       {event.title}
       <div className='popup'>
         <div>From {Cal.format(start)} at {Cal.time(start)}</div>
