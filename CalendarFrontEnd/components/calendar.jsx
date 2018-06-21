@@ -4,9 +4,8 @@ import { toggleModal } from '../actions/ui';
 import Form from './eventForm';
 import * as Cal from '../utils/date';
 import { fetchMonth } from '../actions/events';
-import values from 'lodash/values'
-
-
+import values from 'lodash/values';
+import { Event } from './event'
 
 const dayHeaders = (
   <div>
@@ -19,6 +18,7 @@ const dayHeaders = (
     <div className='day-header'>SAT</div>
   </div>
 );
+
 
 
 class Calendar extends React.Component {
@@ -47,14 +47,14 @@ class Calendar extends React.Component {
   }
 
   dayHash(){
-    const seed = this.state.displayDate.valueOf();
-    let start = new Date(seed);
+    let start = new Date(this.state.displayDate.valueOf());
     start.setDate(1);
     start.setHours(0,0,0,0);
     const end = new Date(start.valueOf());
     end.setMonth(start.getMonth()+1);
 
     let ranges = [];
+
     while (start.valueOf() < end.valueOf()) {
       const next = new Date(start.valueOf());
       next.setDate(next.getDate() + 1);
@@ -67,29 +67,23 @@ class Calendar extends React.Component {
 
     this.props.events.forEach(event=>{
       for (let i = 0; i < ranges.length; i++) {
-        if (event.start >= ranges[i][0] &&
-            event.start < ranges[i][1]){
+        if (event.start >= ranges[i][0] && event.start < ranges[i][1]){
               dayHash[i+1] = dayHash[i+1].concat(event);
               return;
-            }
-      }
-    })
+        }}});
 
     return dayHash;
-    //so you can map through ranges now!
-    //will actually want to do reverse: iterate thru state,
-    //add to each range bucket.
   }
 
   monthRange(){
-      const seed = this.state.displayDate.valueOf();
-      let start = new Date(seed);
+      let start = new Date(this.state.displayDate.valueOf());
       start.setDate(1);
       start.setHours(0,0,0,0);
       const end = new Date(start.valueOf());
       end.setMonth(start.getMonth()+1);
       return([start.valueOf(), end.valueOf()])
   }
+
 
   renderMonth(){
     const firstWeekday = Cal.firstWeekday(this.state.displayDate);
@@ -100,27 +94,21 @@ class Calendar extends React.Component {
 
     let i, j, k;
     for (i=0; i<firstWeekday; i++) cal.push(<div key={i} className='day null'/>);
+
     for (j=0; j<endOfMonth; j++){
 
       const day = j + 1;
-
-      //TODO make squares a separate component
-      const events = dayHash[day].map((event,idx)=>(
-        <li key={idx}>
-          {event.title}
-        </li>
-      ))
+      const events =
+        dayHash[day].map(event => (<Event event={event} key={event.id}/>));
 
       cal.push(
-        <div
-          key={i+j}
-          className='day'
-          onClick={()=>this.handleClick(day)}>
-            <p>{day}</p>
-            <ul>{events}</ul>
-          </div>
-        );
+        <div key={i+j} className='day' onClick={()=>this.handleClick(day)}>
+          <p>{day}</p>
+          <ul>{events}</ul>
+        </div>
+      );
     }
+
     for (k=0; k<end; k++) cal.push(<div key={i+j+k} className='day null'/>);
 
     cal.push(<div key='clear' style={{content:'', clear:'both'}}/>)

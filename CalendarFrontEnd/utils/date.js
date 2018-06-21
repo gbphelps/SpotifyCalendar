@@ -29,3 +29,16 @@ export const months = {
 export const format = date => {
   return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
 }
+
+export const time = date => {
+  const h = date.getHours();
+  let hour = (h > 12 ? h - 12 : h);
+  if (hour === 0) hour = 12;
+
+  const suffix = (h >= 12 ? 'pm' : 'am');
+
+  let minute = date.getMinutes();
+  if (minute < 10) minute = '0' + minute;
+  
+  return `${hour}:${minute}${suffix}`
+}

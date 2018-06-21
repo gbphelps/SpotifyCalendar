@@ -4,7 +4,7 @@ import { toggleModal } from '../actions/ui';
 import MiniCal from './smallCal';
 import { format } from '../utils/date';
 import Time from './time';
-import { createEvent } from '../actions/events'
+import { createEvent } from '../actions/events';
 
 
 class Form extends React.Component{
@@ -35,7 +35,8 @@ class Form extends React.Component{
   }
 
   handleSubmit(){
-    this.props.createEvent(this.state)
+    this.props.createEvent(this.state);
+    this.props.toggle();
   }
 
   dateSetter(attr){
