@@ -12,21 +12,21 @@ export default class Time extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      hour: this.hour(),
+      hour: this.hour(props),
       minute: this.props.date.getMinutes(),
-      suffix: this.suffix()
+      suffix: this.suffix(props)
     }
   }
 
-  hour(){
-    const fullHour = this.props.date.getHours();
+  hour(props){
+    const fullHour = props.date.getHours();
     if ( fullHour === 0) return 12;
     const h = (fullHour > 12 ? fullHour - 12 : fullHour);
     return h;
   }
 
-  suffix(){
-    const h = this.props.date.getHours();
+  suffix(props){
+    const h = props.date.getHours();
     return ( h >= 12 ? 'pm' : 'am' )
   }
 
@@ -69,6 +69,16 @@ export default class Time extends React.Component{
     this.setState({ suffix }, ()=>{
       target.blur();
     })
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (this.props.date.valueOf() !== nextProps.date.valueOf()){
+      this.setState({
+        hour: this.hour(nextProps),
+        minute: nextProps.date.getMinutes(),
+        suffix: this.suffix(nextProps)
+      })
+    }
   }
 
   render(){

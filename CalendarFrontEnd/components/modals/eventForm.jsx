@@ -23,10 +23,18 @@ export default class Form extends React.Component{
   }
 
   set(attr){
-    return val => this.setState({
-      [attr]: val,
-      activeCal: null
-    })
+    return val => {
+      if ((attr === 'end' && val < this.state.start)||
+           (attr === 'start' && val > this.state.end)){
+        this.setState({
+          start: val,
+          end: val,
+          activeCal: null
+        })
+      }else{
+        this.setState({[attr]: val, activeCal: null})
+      }
+    }
   }
 
   toggleCal(cal){
