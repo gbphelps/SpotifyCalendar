@@ -1,20 +1,21 @@
 import Form from './eventForm';
 import { toggleEditor } from '../../actions/ui';
-import { createEvent } from '../../actions/events';
+import { updateEvent } from '../../actions/events';
 import { connect } from 'react-redux'
 
 const mapState = state => {
-  return {
-    on: state.ui.eventForm
-  };
+  if (!state.ui.editForm) return {};
+  return Object.assign({},state.ui.editForm,{
+    on:true,
+    start: new Date(state.ui.editForm.start),
+    end: new Date(state.ui.editForm.end),
+  });
 };
 
-const mapDispatch = dispatch => {
-  console.log(toggleModal);
+const mapDispatch = (dispatch) => {
   return {
     toggle: () => dispatch(toggleEditor()),
-    //no redux stuff for this yet...don't actually need to know note here;
-    createOrUpdate: event => dispatch(createEvent(event))
+    createOrUpdate: event => dispatch(updateEvent(event))
   };
 };
 

@@ -19,7 +19,11 @@ export const getMonth = range => {
   });
 };
 
-export const updateEvent = event => {
+export const updateEvent = formData => {
+  const event = Object.assign({}, formData);
+  event.start = event.start.valueOf();
+  event.end = event.end.valueOf();
+
   return $.ajax({
     method: 'PATCH',
     url: `api/events/${event.id}`,

@@ -10,12 +10,13 @@ export default class Form extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      start: this.props.date,
-      end: this.props.date,
-      title: '',
-      location: '',
-      description: '',
+      start: this.props.start,
+      end: this.props.end,
+      title: this.props.title,
+      location: this.props.location,
+      description: this.props.description,
       activeCal: null,
+      id: this.props.id
     }
     this.set = this.set.bind(this)
   }

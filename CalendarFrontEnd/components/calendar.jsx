@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleModal } from '../actions/ui';
-import Form from './modals/eventCreateForm';
+
+import CreateForm from './modals/eventCreateForm';
+import EditForm from './modals/eventEditForm';
+
 import * as Cal from '../utils/date';
 import { fetchMonth } from '../actions/events';
 import values from 'lodash/values';
@@ -41,7 +44,6 @@ class Calendar extends React.Component {
   }
 
   handleClick(i){
-    console.log(i);
       this.props.toggleModal();
       const selectedDate = new Date(this.state.displayDate.valueOf());
       selectedDate.setDate(i);
@@ -68,7 +70,6 @@ class Calendar extends React.Component {
       const day = startDay.getDate();
       let depth = null;
 
-      console.log(event.start);
       for (let i = 0; i <= dayHash[day].length; i++) {
         if (!dayHash[day][i]){
           dayHash[day][i] = eventWithLength;
@@ -92,7 +93,6 @@ class Calendar extends React.Component {
         }
       }
     });
-    console.log(dayHash);
     return dayHash;
   }
 
@@ -171,16 +171,26 @@ class Calendar extends React.Component {
 
       {dayHeaders}
       {this.renderMonth()}
-      {this.props.eventForm ? <Form date={this.state.selectedDate}/> : null}
+
+      {this.props.eventForm ?
+        <CreateForm
+          start={this.state.selectedDate}
+          end={this.state.selectedDate}/>
+        : null}
+
+      {this.props.editForm ? <EditForm/> : null}
       <EventDetail/>
     </div>
     )
   }
 }
+//TODO don't render the EventDetail in the calendar, it makes it rerender on every mouseover
+//(and recalculate event stacking!!!)
 
 const mapState = state => {
   return {
     eventForm: state.ui.eventForm,
+    editForm: state.ui.editForm,
     events: values(state.events).sort((x,y) => x.start - y.start)
   }
 }

@@ -72,7 +72,6 @@ export default class Time extends React.Component{
   }
 
   render(){
-    console.log(this.props.date);
     return (
       <div style={{display:'flex', alignItems:'center'}}>
         <input

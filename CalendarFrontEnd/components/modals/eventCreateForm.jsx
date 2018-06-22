@@ -5,12 +5,14 @@ import { connect } from 'react-redux'
 
 const mapState = state => {
   return {
-    on: state.ui.eventForm
+    on: state.ui.eventForm,
+    title: '',
+    location: '',
+    description: '',
   };
 };
 
 const mapDispatch = dispatch => {
-  console.log(toggleModal);
   return {
     toggle: () => dispatch(toggleModal()),
     createOrUpdate: event => dispatch(createEvent(event))
