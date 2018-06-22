@@ -22,7 +22,25 @@ export const receiveEvent = event => {
   };
 };
 
+export const REMOVE_EVENT = 'REMOVE_EVENT';
+export const removeEvent = id => {
+  return {
+    type: REMOVE_EVENT,
+    id
+  }
+}
+
 export const createEvent = event => dispatch => {
   return Api.createEvent(event)
   .then(event=>dispatch(receiveEvent(event)))
+}
+
+export const updateEvent = event => dispatch => {
+  return Api.updateEvent(event)
+  .then(event=>dispatch(receiveEvent(event)))
+}
+
+export const deleteEvent = id => dispatch => {
+  return Api.deleteEvent(id)
+  .then(()=> dispatch(removeEvent(id)))
 }

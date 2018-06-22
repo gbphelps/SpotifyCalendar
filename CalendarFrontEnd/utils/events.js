@@ -18,3 +18,19 @@ export const getMonth = range => {
     data: { start, end }
   });
 };
+
+export const updateEvent = event => {
+  return $.ajax({
+    method: 'PATCH',
+    url: `api/events/${event.id}`,
+    data: { event }
+  });
+};
+
+export const deleteEvent = id => {
+  return $.ajax({
+    method: 'DELETE',
+    url: `api/events/${event.id}`,
+    data: { id }
+  });
+};

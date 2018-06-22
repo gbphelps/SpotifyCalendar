@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleModal } from '../actions/ui';
-import Form from './eventForm';
+import Form from './modals/eventCreateForm';
 import * as Cal from '../utils/date';
 import { fetchMonth } from '../actions/events';
 import values from 'lodash/values';
 import Event from './event';
-import EventDetail from './eventDetail'
+import EventDetail from './eventDetail';
+import { createEvent, updateEvent, deleteEvent } from '../actions/events'
 
 const dayHeaders = (
   <div>
@@ -61,29 +62,36 @@ class Calendar extends React.Component {
 
       let length;
       length = (duration > 7 - startDay.getDay()) ? 7 - startDay.getDay() : duration;
-      //if length overflows calendar, clip it
+      const eventWithLength = Object.assign({},event,{ length });
+      //TODO: if length overflows calendar, clip it
 
       const day = startDay.getDate();
-      dayHash[day].push(Object.assign({},event,{ length }));
-      dayHash[day] = dayHash[day].sort((x,y)=>y.length - x.length);
-      //assign length to the event for rendering
+      let depth = null;
+
+      console.log(event.start);
+      for (let i = 0; i <= dayHash[day].length; i++) {
+        if (!dayHash[day][i]){
+          dayHash[day][i] = eventWithLength;
+          depth = i;
+          break;
+        }
+      }
 
       for (let i = 1; i < duration; i++) {
-        //TODO: add clipper for end of month - check starDay.getMonth();
-        //probably do this when you're getting the first duration const.
-
         startDay.setDate(startDay.getDate() + 1);
         const daysLeft = duration - i;
 
         if (startDay.getDay() === 0){
           length = daysLeft > 7 ? 7 : daysLeft;
-          const e = Object.assign({}, event, { length });
-          dayHash[day + i].push(e);
-          dayHash[day + i] = dayHash[day + i].sort((x,y)=>y.length - x.length)
+          const eventWithLength = Object.assign({}, event, { length });
+          dayHash[day + i].push(eventWithLength); //push or find lowest depth?
         }
-        else {dayHash[day + i].unshift({spacer: true});}
+        else {
+          dayHash[day + i][depth] = {spacer: true};
+        }
       }
     });
+    console.log(dayHash);
     return dayHash;
   }
 
@@ -172,14 +180,14 @@ class Calendar extends React.Component {
 const mapState = state => {
   return {
     eventForm: state.ui.eventForm,
-    events: values(state.events)
+    events: values(state.events).sort((x,y) => x.start - y.start)
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     toggleModal: () => dispatch(toggleModal()),
-    fetchMonth: range => dispatch(fetchMonth(range))
+    fetchMonth: range => dispatch(fetchMonth(range)),
   }
 }
 

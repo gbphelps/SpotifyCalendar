@@ -13,3 +13,11 @@ export const toggleEvent = (id, x, y) => {
     payload: { id, x, y }
   };
 };
+
+export const TOGGLE_EDITOR = 'TOGGLE_EDITOR';
+export const toggleEditor = event => {
+  return {
+    type: TOGGLE_EDITOR,
+    event
+  };
+};

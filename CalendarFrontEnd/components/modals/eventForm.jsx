@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { toggleModal } from '../actions/ui';
-import MiniCal from './smallCal';
-import { format } from '../utils/date';
-import Time from './time';
-import { createEvent } from '../actions/events';
+import MiniCal from '../smallCal';
+import { format } from '../../utils/date';
+import Time from '../time';
 
 
-class Form extends React.Component{
+
+export default class Form extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -35,7 +34,7 @@ class Form extends React.Component{
   }
 
   handleSubmit(){
-    this.props.createEvent(this.state);
+    this.props.createOrUpdate(this.state);
     this.props.toggle();
   }
 
@@ -105,21 +104,3 @@ class Form extends React.Component{
     )
   }
 }
-
-const mapState = state => {
-  return {
-    on: state.ui.eventForm
-  };
-};
-
-const mapDispatch = dispatch => {
-  console.log(toggleModal);
-  return {
-    toggle: () => dispatch(toggleModal()),
-    createEvent: event => dispatch(createEvent(event))
-  };
-};
-
-
-
-export default connect(mapState, mapDispatch)(Form);
