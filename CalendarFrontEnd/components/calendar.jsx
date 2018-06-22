@@ -100,9 +100,9 @@ class Calendar extends React.Component {
 
         if (startDay.getDay() === 0){
           length = daysLeft > 7 ? 7 : daysLeft;
+          depth = dayHash[day + i].length;
           const eventWithLength = Object.assign({}, event, { length, depth });
           dayHash[day + i].push(eventWithLength); //TODO push or find lowest depth? I think push is ok.
-          depth = dayHash[day + i].length - 1;
         }
         else {
           dayHash[day + i][depth] = {spacer: true};
@@ -137,6 +137,7 @@ class Calendar extends React.Component {
       const day = j + 1;
       const events =
         dayHash[day].map((event,idx) => (<Event event={event} key={event.id || `spacer${idx}`}/>));
+        //TODO note that you're not explicitly handling undefined entries...it still works though.
 
       cal.push(
         <div key={i+j} className='day' onClick={()=>this.handleClick(day)}>
@@ -201,7 +202,7 @@ class Calendar extends React.Component {
   }
 }
 //TODO don't render the EventDetail in the calendar, it makes it rerender on every mouseover
-//(and recalculate event stacking!!!)
+//(and recalculate event stacking)
 
 const mapState = state => {
   return {
