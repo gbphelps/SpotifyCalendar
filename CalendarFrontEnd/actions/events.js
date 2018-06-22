@@ -32,6 +32,7 @@ export const removeEvent = id => {
 
 export const createEvent = event => dispatch => {
   return Api.createEvent(event)
+  .fail(()=>{})//TODO display errors
   .then(event=>dispatch(receiveEvent(event)))
 }
 

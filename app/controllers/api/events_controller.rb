@@ -5,13 +5,17 @@ class Api::EventsController < ApplicationController
     if @event.save
       render :show
     else
+      render json: @event.errors[:base], status: 422
     end
   end
 
   def update
     @event = Event.find(params[:id])
-    @event.update(event_params)
-    render :show
+    if @event.update(event_params)
+      render :show
+    else
+      render json: @event.errors[:base], status: 422
+    end
   end
 
   def destroy
