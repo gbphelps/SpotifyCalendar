@@ -89,7 +89,12 @@ p{
   padding: 0 3px;
   box-sizing: border-box;
   color:white;
-};
+  box-shadow: 0 5px 10px 0px rgba(0,0,0,.3);
+}
+
+.spacer{
+  box-shadow:none;
+}
 
 .event-detail{
   width: 200px;

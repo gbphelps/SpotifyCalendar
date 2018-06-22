@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { toggleEvent, toggleEditor } from '../actions/ui'
 
 const Event = (props) => {
-  if (props.event.spacer) return <li className='event' style={{width:'0px'}}/>;
+  if (props.event.spacer) return <li className='event spacer' style={{width:'0px'}}/>;
 
   const start = new Date(props.event.start);
   const end = new Date(props.event.end);
@@ -28,7 +28,7 @@ const Event = (props) => {
   //would be nice to hook this up explicitly to the CSS stylesheet.
   return (
     <li className='event'
-        style={{width: props.event.length*101 - 2, background: 'red'}}
+        style={{width: props.event.length*101 - 2, background: 'red', zIndex: props.event.depth + 1}}
         onMouseOver={e => mouseover(e)}
         onMouseOut={mouseout}
         onClick={e=>{

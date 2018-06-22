@@ -72,8 +72,8 @@ class Calendar extends React.Component {
 
       for (let i = 0; i <= dayHash[day].length; i++) {
         if (!dayHash[day][i]){
-          dayHash[day][i] = eventWithLength;
           depth = i;
+          dayHash[day][i] = Object.assign(eventWithLength,{ depth });
           break;
         }
       }
@@ -84,7 +84,7 @@ class Calendar extends React.Component {
 
         if (startDay.getDay() === 0){
           length = daysLeft > 7 ? 7 : daysLeft;
-          const eventWithLength = Object.assign({}, event, { length });
+          const eventWithLength = Object.assign({}, event, { length, depth });
           dayHash[day + i].push(eventWithLength); //TODO push or find lowest depth? I think push is ok.
           depth = dayHash[day + i].length - 1;
         }
@@ -120,7 +120,7 @@ class Calendar extends React.Component {
 
       const day = j + 1;
       const events =
-        dayHash[day].map(event => (<Event event={event} key={event.id}/>));
+        dayHash[day].map((event,idx) => (<Event event={event} key={event.id || `spacer${idx}`}/>));
 
       cal.push(
         <div key={i+j} className='day' onClick={()=>this.handleClick(day)}>
