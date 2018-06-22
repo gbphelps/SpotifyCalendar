@@ -7,7 +7,6 @@ const eventReducer = (state={}, action) => {
       return merge({}, state, {[action.event.id]: action.event});
     case REMOVE_EVENT:
       const prev = merge({},state);
-      console.log(state);
       delete prev[action.id];
       return prev;
     case RECEIVE_EVENTS:
