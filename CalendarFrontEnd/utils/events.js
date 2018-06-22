@@ -34,7 +34,6 @@ export const updateEvent = formData => {
 export const deleteEvent = id => {
   return $.ajax({
     method: 'DELETE',
-    url: `api/events/${event.id}`,
-    data: { id }
+    url: `api/events/${id}`
   });
 };

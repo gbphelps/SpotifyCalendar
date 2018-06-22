@@ -9,6 +9,7 @@ const mapState = state => {
     title: '',
     location: '',
     description: '',
+    formType: 'Create'
   };
 };
 

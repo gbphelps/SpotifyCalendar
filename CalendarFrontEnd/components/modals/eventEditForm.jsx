@@ -1,6 +1,6 @@
 import Form from './eventForm';
 import { toggleEditor } from '../../actions/ui';
-import { updateEvent } from '../../actions/events';
+import { updateEvent, deleteEvent } from '../../actions/events';
 import { connect } from 'react-redux'
 
 const mapState = state => {
@@ -9,13 +9,15 @@ const mapState = state => {
     on:true,
     start: new Date(state.ui.editForm.start),
     end: new Date(state.ui.editForm.end),
+    formType: 'Edit'
   });
 };
 
 const mapDispatch = (dispatch) => {
   return {
     toggle: () => dispatch(toggleEditor()),
-    createOrUpdate: event => dispatch(updateEvent(event))
+    createOrUpdate: event => dispatch(updateEvent(event)),
+    deleteEvent: id => dispatch(deleteEvent(id))
   };
 };
 

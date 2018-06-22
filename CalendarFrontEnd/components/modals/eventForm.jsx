@@ -9,6 +9,7 @@ import Time from '../time';
 export default class Form extends React.Component{
   constructor(props){
     super(props);
+    //TODO pass all of this as a single pre-made object. this.state = event;
     this.state = {
       start: this.props.start,
       end: this.props.end,
@@ -71,7 +72,7 @@ export default class Form extends React.Component{
         <form>
           <i className="close fas fa-times-circle"
              onClick={this.props.toggle}></i>
-          <h1>Create Event</h1>
+           <h1>{this.props.formType} Event</h1>
 
              {this.dateSetter('start')}
              {this.dateSetter('end')}
@@ -99,7 +100,17 @@ export default class Form extends React.Component{
                <textarea onChange={this.update('description')} value={this.state.description}/>
              </div>
 
-             <div onClick={()=>this.handleSubmit()}>Submit</div>
+             <div
+               className='modal-button'
+               onClick={()=>this.handleSubmit()}>{this.props.formType} Event</div>
+
+             {this.props.formType === 'Edit' ?
+               <div className='modal-button'
+                 onClick={()=>{
+                   this.props.deleteEvent(this.state.id);
+                   this.props.toggle()
+                 }}>Delete Event</div> :
+                 null}
         </form>
       </div>
     )
