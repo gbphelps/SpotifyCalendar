@@ -57,10 +57,25 @@ class Calendar extends React.Component {
     for (var i = 0; i < 31; i++) dayHash[i+1] = [];
 
     this.props.events.forEach(event=>{
-      const startDay = new Date(event.start);
-      if (startDay.getMonth() !== this.state.displayDate.getMonth()) return;
+      let startDay = new Date(event.start);
 
-      const duration = Cal.numDays(event.start, event.end);
+      if (event.start < this.monthRange()[0] && event.end >= this.monthRange()[0]){
+        startDay = new Date(this.monthRange()[0]) //clip events beginning before month.
+      }
+
+      if (startDay.getMonth() !== this.state.displayDate.getMonth()) return;
+      //prune edited events that are out of range
+
+      const endDay = new Date(event.end);
+      let duration;
+      if (endDay.getMonth() !== this.state.displayDate.getMonth()){ //clip events ending after month.
+        const endOfMonth = Cal.endOfMonth(this.state.displayDate);
+        duration = endOfMonth - startDay.getDay()+1;
+      }else{
+        duration = endDay.getDate() - startDay.getDate() + 1;
+      }
+
+
 
       let length;
       length = (duration > 7 - startDay.getDay()) ? 7 - startDay.getDay() : duration;
@@ -80,6 +95,7 @@ class Calendar extends React.Component {
 
       for (let i = 1; i < duration; i++) {
         startDay.setDate(startDay.getDate() + 1);
+        if (startDay.getMonth() !== this.state.displayDate.getMonth()) break;
         const daysLeft = duration - i;
 
         if (startDay.getDay() === 0){

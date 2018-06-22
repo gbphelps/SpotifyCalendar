@@ -13,7 +13,7 @@ const EventDetail = ({event, x, y}) => {
         left: x,
         zIndex: 100,
       }}>
-       <div className='event-detail-title'>{event.title}</div>
+       <div className='event-detail-title'>{event.title || 'Untitled'}</div>
        <div className= 'event-detail-body'>
          <div>From {Cal.format(start)} at {Cal.time(start)}</div>
          <div>To {Cal.format(end)} at {Cal.time(end)}</div>
