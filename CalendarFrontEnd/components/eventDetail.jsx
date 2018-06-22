@@ -15,10 +15,11 @@ const EventDetail = ({event, x, y}) => {
       }}>
        <div className='event-detail-title'>{event.title || 'Untitled'}</div>
        <div className= 'event-detail-body'>
-         <div>From {Cal.format(start)} at {Cal.time(start)}</div>
-         <div>To {Cal.format(end)} at {Cal.time(end)}</div>
-         <div>Location: {event.location}</div>
-         <div>Description: {event.description}</div>
+         <p>From {Cal.format(start)} at {Cal.time(start)}</p>
+         <p>To {Cal.format(end)} at {Cal.time(end)}</p>
+         <p>Location: {event.location}</p>
+         <p>Description:</p>
+         <p>&nbsp;&nbsp;&nbsp;{event.description}</p>
        </div>
     </div>
   )
