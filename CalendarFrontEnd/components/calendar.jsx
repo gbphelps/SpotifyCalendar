@@ -55,7 +55,6 @@ class Calendar extends React.Component {
   }
 
   dayHash(){
-    console.log('ping');
     const dayHash = {};
 
     for (var i = 0; i < 31; i++) dayHash[i+1] = [];
