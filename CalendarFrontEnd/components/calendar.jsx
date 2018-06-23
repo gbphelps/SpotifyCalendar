@@ -9,7 +9,7 @@ import * as Cal from '../utils/date';
 import { fetchMonth } from '../actions/events';
 import values from 'lodash/values';
 import Event from './event';
-import EventDetail from './eventDetail';
+
 import { createEvent, updateEvent, deleteEvent } from '../actions/events'
 
 const dayHeaders = (
@@ -43,6 +43,10 @@ class Calendar extends React.Component {
     this.props.fetchMonth(this.monthRange());
   }
 
+  shouldComponentUpdate(nextProps){
+    return nextProps.rerender
+  }
+
   handleClick(i){
       this.props.toggleModal();
       const selectedDate = new Date(this.state.displayDate.valueOf());
@@ -51,7 +55,7 @@ class Calendar extends React.Component {
   }
 
   dayHash(){
-    //TODO: refactor - this is gross
+    console.log('ping');
     const dayHash = {};
 
     for (var i = 0; i < 31; i++) dayHash[i+1] = [];
@@ -196,19 +200,18 @@ class Calendar extends React.Component {
         : null}
 
       {this.props.editForm ? <EditForm/> : null}
-      <EventDetail/>
     </div>
     )
   }
 }
-//TODO don't render the EventDetail in the calendar, it makes it rerender on every mouseover
-//(and recalculate event stacking)
+
 
 const mapState = state => {
   return {
     eventForm: state.ui.eventForm,
     editForm: state.ui.editForm,
-    events: values(state.events).sort((x,y) => x.start - y.start)
+    events: values(state.events).sort((x,y) => x.start - y.start),
+    rerender: state.rerender
   }
 }
 
