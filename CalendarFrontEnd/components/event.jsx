@@ -28,7 +28,7 @@ const Event = (props) => {
   //would be nice to hook this up explicitly to the CSS stylesheet.
   return (
     <li className='event'
-        style={{width: props.event.length*101 - 2, background: 'red', zIndex: props.event.depth + 1}}
+        style={{width: props.event.length*151 - 2, background: 'red', zIndex: props.event.depth + 1}}
         onMouseOver={e => mouseover(e)}
         onMouseOut={mouseout}
         onClick={e=>{
