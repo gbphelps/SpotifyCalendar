@@ -14,13 +14,16 @@ const EventDetail = ({event, x, y}) => {
         zIndex: 100,
       }}>
        <div className='event-detail-title'>{event.title || 'Untitled'}</div>
-       <div className= 'event-detail-body'>
-         <p>From {Cal.format(start)} at {Cal.time(start)}</p>
-         <p>To {Cal.format(end)} at {Cal.time(end)}</p>
-         <p>Location: {event.location}</p>
-         <p>Description:</p>
-         <p>&nbsp;&nbsp;&nbsp;{event.description}</p>
-       </div>
+
+         <div className='event-detail-dates'>
+           <p>From {Cal.format(start)} at {Cal.time(start)}</p>
+           <p>To {Cal.format(end)} at {Cal.time(end)}</p>
+           {event.location ? <p>Location: {event.location}</p> : null}
+         </div>
+
+         {event.description ?
+           <div className= 'event-detail-body'>{event.description}</div>
+           : null}
     </div>
   )
 }

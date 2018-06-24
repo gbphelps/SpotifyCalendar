@@ -121,7 +121,9 @@ export default class Form extends React.Component{
 
              <div
                className='modal-button'
-               onClick={()=>this.handleSubmit()}>{this.props.formType} Event</div>
+               onClick={()=>this.handleSubmit()}>
+               {this.props.formType === 'Edit' ? 'Save Changes' : 'Create Event'}
+             </div>
 
         </form>
       </div>
