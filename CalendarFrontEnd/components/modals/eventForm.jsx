@@ -78,8 +78,19 @@ export default class Form extends React.Component{
       <div>
         <div className='screen' onClick={this.props.toggle}/>
         <form>
-          <i className="close fas fa-times-circle"
+          <div className='close'>
+
+            {this.props.formType === 'Edit' ?
+              <i className='fas fa-trash'
+                onClick={()=>{
+                  this.props.deleteEvent(this.state.id);
+                  this.props.toggle()
+                }}/> :
+                null}
+          <i className="fas fa-times-circle"
              onClick={this.props.toggle}></i>
+         </div>
+
            <h1>{this.props.formType} Event</h1>
 
              {this.dateSetter('start')}
@@ -112,13 +123,6 @@ export default class Form extends React.Component{
                className='modal-button'
                onClick={()=>this.handleSubmit()}>{this.props.formType} Event</div>
 
-             {this.props.formType === 'Edit' ?
-               <div className='modal-button'
-                 onClick={()=>{
-                   this.props.deleteEvent(this.state.id);
-                   this.props.toggle()
-                 }}>Delete Event</div> :
-                 null}
         </form>
       </div>
     )
